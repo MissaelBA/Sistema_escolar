@@ -49,3 +49,11 @@ CREATE TABLE calificaciones (
     
 	UNIQUE (alumno_id, materia_id)
 );
+
+ALTER TABLE calificaciones
+MODIFY fecha_registro DATE
+NOT NULL DEFAULT (CURRENT_DATE);
+
+ALTER TABLE calificaciones
+ADD CONSTRAINT chk_calificacion
+CHECK (calificacion >= 0 AND calificacion <= 10);
