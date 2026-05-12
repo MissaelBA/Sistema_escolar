@@ -1,6 +1,3 @@
-CREATE DATABASE Telebachillerato;
-USE Telebachillerato;
-
 -- La clave se concatenara con el id al mostrarla para no duplicar información y que se vea de manera más limpia
 CREATE TABLE centros (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -36,12 +33,14 @@ CREATE TABLE calificaciones (
     id INT AUTO_INCREMENT PRIMARY KEY,
 	alumno_id INT NOT NULL,
 	materia_id INT NOT NULL,
-	calificacion DECIMAL(4,2) NOT NULL,
+	calificacion DECIMAL(3,2) NOT NULL,
 	fecha_registro DATE,
 
+    CONSTRAINT fk_calificaciones_alumno
     FOREIGN KEY (alumno_id)
     REFERENCES alumnos(id),
 
+	CONSTRAINT fk_calificaciones_materia
     FOREIGN KEY (materia_id)
     REFERENCES materias(id)
 );
