@@ -6,22 +6,25 @@ CREATE TABLE centros (
     municipio VARCHAR(100) NOT NULL,
     encargado VARCHAR(100) NOT NULL,
     correo VARCHAR(100) NOT NULL UNIQUE
-);
+);	
 
 CREATE TABLE alumnos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     matricula VARCHAR(100) NOT NULL UNIQUE,
-	centro_id INT NOT NULL,
-    estatus ENUM('activo', 'inactivo'),
-    nombre VARCHAR(100) NOT NULL,
+    centro_id INT NOT NULL,
+    estatus ENUM('activo', 'inactivo') NOT NULL,
+	nombre VARCHAR(100) NOT NULL,
     paterno VARCHAR(100) NOT NULL,
     materno VARCHAR(100) NOT NULL,
-    correo VARCHAR(100) NOT NULL UNIQUE,
-    genero ENUM('H', 'M'),
+    genero ENUM('H', 'M')NOT NULL,
     generacion INT NOT NULL,
     municipio VARCHAR(100) NOT NULL,
     pais VARCHAR(50) NOT NULL,
-    fecha_nacimiento DATE
+    fecha_nacimiento DATE,
+
+    CONSTRAINT fk_alumnos_centro
+    FOREIGN KEY (centro_id)
+    REFERENCES centros(id)
 );
 
 CREATE TABLE materias (
@@ -33,7 +36,7 @@ CREATE TABLE calificaciones (
     id INT AUTO_INCREMENT PRIMARY KEY,
 	alumno_id INT NOT NULL,
 	materia_id INT NOT NULL,
-	calificacion DECIMAL(3,2) NOT NULL,
+	calificacion DECIMAL(4,2) NOT NULL,
 	fecha_registro DATE,
 
     CONSTRAINT fk_calificaciones_alumno
@@ -42,5 +45,7 @@ CREATE TABLE calificaciones (
 
 	CONSTRAINT fk_calificaciones_materia
     FOREIGN KEY (materia_id)
-    REFERENCES materias(id)
+    REFERENCES materias(id),
+    
+	UNIQUE (alumno_id, materia_id)
 );
